@@ -7,7 +7,9 @@ console.log("Logs from your program will appear here!");
 const server = net.createServer((connection) => {
     connection.on("data", (data) => {
 
-        let arrayOfData = data.split("\r\n");
+        let arrayOfData = data.toString().split("\r\n");
+
+        console.log(arrayOfData);
 
         for (let i = 0; i < arrayOfData.length; i++) {
             if (arrayOfData[i].toLowerCase().includes("echo") || arrayOfData[i].toLowerCase().includes("$") || arrayOfData[i].toLowerCase().includes("*")) {
