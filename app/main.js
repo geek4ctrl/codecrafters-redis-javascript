@@ -8,19 +8,26 @@ const server = net.createServer((connection) => {
     connection.on("data", (data) => {
 
         let arrayOfData = data.toString().split("\r\n");
-
         console.log(arrayOfData);
 
-        for (let i = 0; i < arrayOfData.length; i++) {
-            if (arrayOfData[i].toLowerCase().includes("echo") || arrayOfData[i].toLowerCase().includes("$") || arrayOfData[i].toLowerCase().includes("*")) {
-                return;
-            } else {
-                connection.write(arrayOfData[i] + "\r\n");
-            }
-        }
+        let word = arrayOfData[4];
+        console.log(word);
 
-        console.log('Data: ', data);
-        connection.write("+PONG\r\n");
+        switch (arrayOfData[2].toLowerCase()) {
+
+            case "ping":
+                console.log('Data: ', data);
+                connection.write("+PONG\r\n");
+                break;
+
+            case "echo":
+                connection.write(`+${word}\r\n`);
+                break;
+
+            default:
+                return;
+
+        }
 
     })
 });
