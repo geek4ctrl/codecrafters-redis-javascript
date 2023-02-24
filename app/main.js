@@ -7,14 +7,14 @@ console.log("Logs from your program will appear here!");
 const server = net.createServer((connection) => {
     connection.on("data", (data) => {
 
-        let arrayOfData = data.split(" ");
+        let arrayOfData = data.split("\r\n");
 
-        if (arrayOfData[0].toLowerCase() === "echo") {
-
-            for (let i = 1; i < arrayOfData.length; i++) {
+        for (let i = 0; i < arrayOfData.length; i++) {
+            if (arrayOfData[i].toLowerCase().includes("echo") || arrayOfData[i].toLowerCase().includes("$") || arrayOfData[i].toLowerCase().includes("*")) {
+                return;
+            } else {
                 connection.write(arrayOfData[i] + "\r\n");
             }
-
         }
 
         console.log('Data: ', data);
