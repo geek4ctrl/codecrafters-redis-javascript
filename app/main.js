@@ -27,7 +27,7 @@ const server = net.createServer((connection) => {
                 break;
 
             case "set":
-                localStorage.setItem(`${word}`, anotherWord);
+                localStorage.setItem(`${word}`, `${anotherWord}`);
                 break;
 
             case "get":
