@@ -24,6 +24,14 @@ const server = net.createServer((connection) => {
                 connection.write(`+${word}\r\n`);
                 break;
 
+            case "SET":
+                localStorage.setItem(`${word}`,);
+                break;
+
+            case "GET":
+                localStorage.getItem(`${word}`);
+                break;
+
             default:
                 return;
 
