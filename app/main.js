@@ -11,6 +11,8 @@ const server = net.createServer((connection) => {
         console.log(arrayOfData);
 
         let word = arrayOfData[4];
+        let anotherWord = arrayOfData[6];
+
         console.log(word);
 
         switch (arrayOfData[2].toLowerCase()) {
@@ -24,11 +26,11 @@ const server = net.createServer((connection) => {
                 connection.write(`+${word}\r\n`);
                 break;
 
-            case "SET":
-                localStorage.setItem(`${word}`,);
+            case "set":
+                localStorage.setItem(`${word}`, anotherWord);
                 break;
 
-            case "GET":
+            case "get":
                 localStorage.getItem(`${word}`);
                 break;
 
