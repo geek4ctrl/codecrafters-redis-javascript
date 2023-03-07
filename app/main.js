@@ -12,10 +12,10 @@ const server = net.createServer((connection) => {
         let arrayOfData = data.toString().split("\r\n");
         console.log(arrayOfData);
 
-        let word = arrayOfData[4];
-        let anotherWord = arrayOfData[6];
-
-        console.log(word);
+        let key = arrayOfData[4];
+        let value = arrayOfData[6];
+        const ttl = parseInt(array[10]);
+        const timestamp = ttl !== undefined ? (new Date().getTime() + ttl) : null;
 
         switch (arrayOfData[2].toLowerCase()) {
 
@@ -25,40 +25,29 @@ const server = net.createServer((connection) => {
                 break;
 
             case "echo":
-                connection.write(`+${word}\r\n`);
+                connection.write(`+${key}\r\n`);
                 break;
 
             case "set":
 
-                if (arrayOfData[arrayOfData.length - 2] == "PX") {
-                    console.log('Show me the PX:', arrayOfData[8]);
-
-                    const current = new Date();
-
-                    if (arrayOfData[arrayOfData.length - 1] > current.getTime()) {
-
-                        console.log('Show me the PX:', arrayOfData[8]);
-                        connection.write(`+${map[word]}\r\n`);
-
-                    } else {
-
-                        connection.write("-1\r\n");
-
-                    }
-
-                } else {
-                    map[word] = anotherWord;
-                    connection.write("+OK\r\n");
-                }
-
+                map[key] = { value: value, timestamp: timestamp };
+                connection.write("+OK\r\n");
                 break;
 
             case "get":
-                if (map[word]) {
-                    connection.write(`+${map[word]}\r\n`);
-                } else {
-                    connection.write("-Error message\r\n");
+
+                const answer = map[key];
+                const currentTime = new Date().getTime();
+                const expiredTime = answer.timestamp;
+
+                if (answer.timestamp) {
+                    if (currentTime < expiredTime) {
+                        connection.write(`+${answer.value}\r\n`);
+                    } else {
+                        connection.write(`$-1\r\n`);
+                    }
                 }
+
                 break;
 
             default:
