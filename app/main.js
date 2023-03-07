@@ -42,7 +42,7 @@ const server = net.createServer((connection) => {
 
                     } else {
 
-                        connection.write("+\r\n");
+                        connection.write("-1\r\n");
 
                     }
 
