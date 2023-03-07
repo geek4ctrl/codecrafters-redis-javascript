@@ -14,7 +14,7 @@ const server = net.createServer((connection) => {
 
         let key = arrayOfData[4];
         let value = arrayOfData[6];
-        const ttl = parseInt(array[10]);
+        const ttl = parseInt(arrayOfData[10]);
         const timestamp = ttl !== undefined ? (new Date().getTime() + ttl) : null;
 
         switch (arrayOfData[2].toLowerCase()) {
