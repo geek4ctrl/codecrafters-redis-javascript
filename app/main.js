@@ -31,13 +31,19 @@ const server = net.createServer((connection) => {
             case "set":
 
                 if (arrayOfData[8] == "PX") {
+                    console.log('Show me the PX:', arrayOfData[8]);
 
                     const current = new Date();
 
                     if (arrayOfData[10] > current.getTime()) {
+
+                        console.log('Show me the PX:', arrayOfData[8]);
                         connection.write(`+${map[word]}\r\n`);
+
                     } else {
+
                         connection.write("+\r\n");
+
                     }
 
                 } else {
