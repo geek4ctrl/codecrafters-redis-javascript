@@ -29,8 +29,22 @@ const server = net.createServer((connection) => {
                 break;
 
             case "set":
-                map[word] = anotherWord;
-                connection.write("+OK\r\n");
+
+                if (arrayOfData[8] == "PX") {
+
+                    const current = new Date();
+
+                    if (arrayOfData[10] > current.getTime()) {
+                        connection.write(`+${map[word]}\r\n`);
+                    } else {
+                        connection.write("+\r\n");
+                    }
+
+                } else {
+                    map[word] = anotherWord;
+                    connection.write("+OK\r\n");
+                }
+
                 break;
 
             case "get":
