@@ -4,6 +4,7 @@ const net = require("net");
 console.log("Logs from your program will appear here!");
 
 const map = {};
+const storage = new Map();
 
 // Uncomment this block to pass the first stage
 const server = net.createServer((connection) => {
@@ -30,13 +31,17 @@ const server = net.createServer((connection) => {
 
             case "set":
 
-                map[key] = { value: value, timestamp: timestamp };
+                // map[key] = { value: value, timestamp: timestamp };
+                storage.set(key, { value: value, timestamp: timestamp });
+
                 connection.write("+OK\r\n");
                 break;
 
             case "get":
 
-                const answer = map[key];
+                // const answer = map[key];
+                const answer = storage.get(key);
+
                 const currentTime = new Date().getTime();
                 const expiredTime = answer.timestamp;
 
