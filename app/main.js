@@ -51,6 +51,8 @@ const server = net.createServer((connection) => {
                     } else {
                         connection.write(`$-1\r\n`);
                     }
+                } else {
+                    connection.write(`+${answer.value}\r\n`);
                 }
 
                 break;
